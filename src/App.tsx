@@ -1,5 +1,7 @@
 import QRCode from 'qrcode';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 function App() {
   const [text, setText] = useState<string>('');
@@ -24,25 +26,25 @@ function App() {
     }
   };
   return (
-    <>
-      <input
+    <main className="h-screen flex flex-col gap-4 justify-center items-center bg-slate-800">
+      <Input
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button onClick={() => generateQR(text)}>generate QR code</button>
+      <Button onClick={() => generateQR(text)}>generate QR code</Button>
 
       <div>
         {qrPath?.length > 0 ? (
           <>
             <img src={qrPath} alt="" />{' '}
-            <button onClick={() => downloadPNG(qrPath)}>
+            <Button onClick={() => downloadPNG(qrPath)}>
               download QR code
-            </button>
+            </Button>
           </>
         ) : null}
       </div>
-    </>
+    </main>
   );
 }
 
