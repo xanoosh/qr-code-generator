@@ -17,7 +17,6 @@ export default function QrForm({
   generateQR: (text: string) => void;
 }) {
   const [inputText, setInputText] = useState<string>('');
-  console.log(inputText);
 
   return (
     <Card className="w-full max-w-sm">
