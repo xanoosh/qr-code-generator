@@ -5,7 +5,6 @@ import QrForm from './components/QrForm';
 import QrDialog from './components/QrDialog';
 
 function App() {
-  const [qrText, setQrText] = useState<string>('');
   const [dialogOpen, setDalogOpen] = useState<boolean>(false);
   const [qrPath, setQrPath] = useState<string>('');
 
@@ -14,18 +13,14 @@ function App() {
     try {
       const qrUrl = await QRCode.toDataURL(text);
       setQrPath(qrUrl);
+      setDalogOpen(true);
     } catch (err) {
       console.error(err);
     }
   };
   return (
     <main className="h-screen flex flex-col gap-4 justify-center items-center bg-slate-900">
-      <QrForm
-        qrText={qrText}
-        setQrText={setQrText}
-        generateQR={generateQR}
-        setOpen={setDalogOpen}
-      />
+      <QrForm generateQR={generateQR} />
       <QrDialog
         open={dialogOpen}
         setOpen={setDalogOpen}

@@ -40,11 +40,13 @@ export default function QrDialog({
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
-            <img
-              src={qrPath}
-              alt="qr code"
-              className="rounded-lg mx-auto w-40 h-40"
-            />
+            {qrPath?.length > 0 ? (
+              <img
+                src={qrPath}
+                alt="qr code"
+                className="rounded-lg mx-auto w-40 h-40"
+              />
+            ) : null}
           </div>
           <DialogFooter className="flex-col gap-2 sm:justify-between">
             <DialogClose asChild>

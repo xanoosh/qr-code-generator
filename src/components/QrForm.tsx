@@ -12,17 +12,12 @@ import {
 } from '@/components/ui/card';
 
 export default function QrForm({
-  qrText,
-  setQrText,
   generateQR,
-  setOpen,
 }: {
-  qrText: string;
-  setQrText: (text: string) => void;
   generateQR: (text: string) => void;
-  setOpen: (open: boolean) => void;
 }) {
   const [inputText, setInputText] = useState<string>('');
+  console.log(inputText);
 
   return (
     <Card className="w-full max-w-sm">
@@ -51,11 +46,7 @@ export default function QrForm({
           variant={inputText?.length > 0 ? 'default' : 'outline'}
           disabled={inputText?.length > 0 ? false : true}
           className="w-full cursor-pointer"
-          onClick={() => {
-            generateQR(qrText);
-            setQrText(inputText);
-            setOpen(true);
-          }}
+          onClick={() => generateQR(inputText)}
         >
           Generate QR code
         </Button>
