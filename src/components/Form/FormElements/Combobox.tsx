@@ -19,11 +19,13 @@ import {
 
 export default function Combobox({
   value,
-  setValue,
+  onValueChange,
+  onBlur,
   list,
 }: {
   value: string;
-  setValue: (value: string) => void;
+  onValueChange: (value: string) => void;
+  onBlur: () => void;
   list: { value: string; label: string }[];
 }) {
   const [open, setOpen] = useState(false);
@@ -32,12 +34,12 @@ export default function Combobox({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          onBlur={onBlur}
           variant="outline"
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {/* {searchResult(list, value)} */}
           {value
             ? list.find((el) => el.value === value)?.label
             : 'Select framework...'}
@@ -55,7 +57,7 @@ export default function Combobox({
                   key={el.value}
                   value={el.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue);
+                    onValueChange(currentValue === value ? '' : currentValue);
                     setOpen(false);
                   }}
                 >
