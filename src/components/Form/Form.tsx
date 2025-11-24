@@ -41,10 +41,8 @@ const imageFormats = [
 
 import {
   Field,
-  FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
   FieldSeparator,
   FieldSet,
 } from '@/components/ui/field';
