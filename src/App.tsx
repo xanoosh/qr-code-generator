@@ -10,6 +10,18 @@ function App() {
 
   // generate qr
   const generateQR = async (text: string) => {
+    //options
+    // var opts = {
+    //   maskPattern: 0,
+    //   errorCorrectionLevel: 'H',
+    //   type: 'image/jpeg',
+    //   quality: 0.3,
+    //   margin: 1,
+    //   color: {
+    //     dark: '#010599FF',
+    //     light: '#FFBF60FF',
+    //   },
+    // };
     try {
       const qrUrl = await QRCode.toDataURL(text);
       setQrPath(qrUrl);
