@@ -10,20 +10,34 @@ function App() {
 
   // generate qr
   const generateQR = async (text: string) => {
-    //options
-    // var opts = {
-    //   maskPattern: 0,
-    //   errorCorrectionLevel: 'H',
-    //   type: 'image/jpeg',
-    //   quality: 0.3,
-    //   margin: 1,
-    //   color: {
-    //     dark: '#010599FF',
-    //     light: '#FFBF60FF',
-    //   },
-    // };
+    interface QRCodeOptions {
+      maskPattern?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+      version?: number;
+      errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H';
+      type?: 'image/png' | 'image/jpeg' | 'image/webp';
+      quality?: number;
+      margin?: number;
+      color?: {
+        dark: string;
+        light: string;
+      };
+    }
+    // options
+    const options: QRCodeOptions = {
+      // maskPattern: 0,
+      // version: 1,
+      errorCorrectionLevel: 'H',
+      type: 'image/jpeg',
+      quality: 0,
+      margin: 1,
+      color: {
+        dark: '#010599FF',
+        light: '#FFBF60FF',
+      },
+    };
+
     try {
-      const qrUrl = await QRCode.toDataURL(text);
+      const qrUrl = await QRCode.toDataURL(text, { ...options });
       setQrPath(qrUrl);
       setDalogOpen(true);
     } catch (err) {

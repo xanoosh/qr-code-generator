@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -10,7 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Combobox from './FormElements/Combobox';
+import Combobox from './Form/FormElements/Combobox';
+import Form from './Form/Form';
 
 const MaskPatterns = [
   {
@@ -66,7 +66,6 @@ export default function QrForm({
       <CardContent>
         <form>
           <div className="grid gap-2">
-            <Label htmlFor="qr-code">QR code content</Label>
             <Input
               id="qr-code"
               type="text"
@@ -81,6 +80,7 @@ export default function QrForm({
             />
           </div>
         </form>
+        <Form />
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button
