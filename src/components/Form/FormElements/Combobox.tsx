@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { useState } from 'react';
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
