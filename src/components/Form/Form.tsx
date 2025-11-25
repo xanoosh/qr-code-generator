@@ -40,20 +40,66 @@ const imageFormats = [
   },
 ];
 
-const schema = z.object({
-  'qr-code-value': z.string().min(1, { message: 'You must enter a value' }),
-  // 'qr-code-margin': z.preprocess((val) => {
-  //   if (typeof val === 'string' && val.trim() === '') return NaN;
-  //   return Number(val);
-  // }, z.number().min(1, { message: 'Margin value is too low' }).max(20, { message: 'Margin value is too high' })),
+//declare schema unions
+const schemaUnionLow = z.object({
+  'qr-code-value': z
+    .string()
+    .min(1, { message: 'Value must not be empty' })
+    .max(2, { message: 'Value is too long' }),
+  'error-correction': z.literal(['L']),
   'qr-code-margin': z
     .number()
     .min(1, { message: 'Margin value is too low' })
     .max(20, { message: 'Margin value is too high' }),
-
-  'error-correction': z.enum(['L', 'M', 'Q', 'H']),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
 });
+
+const schemaUnionMedium = z.object({
+  'qr-code-value': z
+    .string()
+    .min(1, { message: 'Value must not be empty' })
+    .max(3, { message: 'Value is too long' }),
+  'error-correction': z.literal(['M']),
+  'qr-code-margin': z
+    .number()
+    .min(1, { message: 'Margin value is too low' })
+    .max(20, { message: 'Margin value is too high' }),
+  'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
+});
+
+const schemaUnionQuartile = z.object({
+  'qr-code-value': z
+    .string()
+    .min(1, { message: 'Value must not be empty' })
+    .max(4, { message: 'Value is too long' }),
+  'error-correction': z.literal(['Q']),
+  'qr-code-margin': z
+    .number()
+    .min(1, { message: 'Margin value is too low' })
+    .max(20, { message: 'Margin value is too high' }),
+  'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
+});
+
+const schemaUnionHigh = z.object({
+  'qr-code-value': z
+    .string()
+    .min(1, { message: 'Value must not be empty' })
+    .max(5, { message: 'Value is too long' }),
+  'error-correction': z.literal(['H']),
+  'qr-code-margin': z
+    .number()
+    .min(1, { message: 'Margin value is too low' })
+    .max(20, { message: 'Margin value is too high' }),
+  'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
+});
+
+//declare final schema
+const schema = z.discriminatedUnion('error-correction', [
+  schemaUnionLow,
+  schemaUnionMedium,
+  schemaUnionQuartile,
+  schemaUnionHigh,
+]);
 
 import {
   Field,
@@ -129,7 +175,7 @@ export default function Form({
                         min={0}
                         max={20}
                         value={field.value}
-                        onChange={field.onChange}
+                        onChange={(e) => field.onChange(+e.target.value)}
                         onBlur={field.onBlur}
                       />
                       {error && <FieldError>{error.message}</FieldError>}
@@ -166,13 +212,16 @@ export default function Form({
                 <Controller
                   name="image-format"
                   control={control}
-                  render={({ field }) => (
-                    <Combobox
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      onBlur={field.onBlur}
-                      list={imageFormats}
-                    />
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <Combobox
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        onBlur={field.onBlur}
+                        list={imageFormats}
+                      />
+                      {error && <FieldError>{error.message}</FieldError>}
+                    </>
                   )}
                 />
               </Field>
