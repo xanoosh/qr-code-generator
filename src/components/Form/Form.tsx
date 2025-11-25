@@ -42,10 +42,15 @@ const imageFormats = [
 
 const schema = z.object({
   'qr-code-value': z.string().min(1, { message: 'You must enter a value' }),
+  // 'qr-code-margin': z.preprocess((val) => {
+  //   if (typeof val === 'string' && val.trim() === '') return NaN;
+  //   return Number(val);
+  // }, z.number().min(1, { message: 'Margin value is too low' }).max(20, { message: 'Margin value is too high' })),
   'qr-code-margin': z
     .number()
-    .min(1, { message: 'Margin must be at least 1' })
-    .max(20, { message: 'The value is to high' }),
+    .min(1, { message: 'Margin value is too low' })
+    .max(20, { message: 'Margin value is too high' }),
+
   'error-correction': z.enum(['L', 'M', 'Q', 'H']),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
 });
