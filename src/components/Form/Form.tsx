@@ -1,5 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,12 +40,23 @@ const imageFormats = [
   },
 ];
 
+const schema = z.object({
+  'qr-code-value': z.string().min(1, { message: 'You must enter a value' }),
+  'qr-code-margin': z
+    .number()
+    .min(1, { message: 'Margin must be at least 1' })
+    .max(20, { message: 'The value is to high' }),
+  'error-correction': z.enum(['L', 'M', 'Q', 'H']),
+  'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
+});
+
 import {
   Field,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
   FieldSet,
+  FieldError,
 } from '@/components/ui/field';
 import type { QRCodeOptionsInterface } from '@/interfaces';
 
@@ -53,23 +65,24 @@ export default function Form({
 }: {
   generateQR: (text: string, options?: QRCodeOptionsInterface) => void;
 }) {
-  const { control, handleSubmit } = useForm({
+  type FormData = z.infer<typeof schema>;
+
+  const { control, handleSubmit } = useForm<FormData>({
+    resolver: zodResolver(schema),
     defaultValues: {
       'qr-code-value': '',
       'qr-code-margin': 1,
-      'error-correction-level': 'M',
+      'error-correction': 'M',
       'image-format': 'image/png',
     },
   });
-  const [data, setData] = useState<string | null>(null);
 
   return (
     <div className="w-full max-w-md">
       <form
         onSubmit={handleSubmit((data) => {
-          setData(JSON.stringify(data));
           generateQR(data['qr-code-value'], {
-            errorCorrectionLevel: data['error-correction-level'],
+            errorCorrectionLevel: data['error-correction'],
             margin: data['qr-code-margin'],
             type: data['image-format'],
           });
@@ -85,13 +98,15 @@ export default function Form({
                 <Controller
                   name="qr-code-value"
                   control={control}
-                  render={({ field }) => (
-                    <Input
-                      required={true}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                    />
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <Input
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                      />
+                      {error && <FieldError>{error.message}</FieldError>}
+                    </>
                   )}
                 />
               </Field>
@@ -102,35 +117,40 @@ export default function Form({
                 <Controller
                   name="qr-code-margin"
                   control={control}
-                  render={({ field }) => (
-                    <Input
-                      type="number"
-                      min={0}
-                      max={20}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                    />
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={20}
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                      />
+                      {error && <FieldError>{error.message}</FieldError>}
+                    </>
                   )}
                 />
               </Field>
             </FieldGroup>
-            <FieldSeparator />
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="error-correction-level">
+                <FieldLabel htmlFor="error-correction">
                   Error correction level
                 </FieldLabel>
                 <Controller
-                  name="error-correction-level"
+                  name="error-correction"
                   control={control}
-                  render={({ field }) => (
-                    <Combobox
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      onBlur={field.onBlur}
-                      list={errorCorrectionLevels}
-                    />
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <Combobox
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        onBlur={field.onBlur}
+                        list={errorCorrectionLevels}
+                      />
+                      {error && <FieldError>{error.message}</FieldError>}
+                    </>
                   )}
                 />
               </Field>
@@ -157,7 +177,6 @@ export default function Form({
           <Field orientation="horizontal">
             <Button type="submit">Submit</Button>
           </Field>
-          {data ? <p>{data}</p> : null}
         </FieldGroup>
       </form>
     </div>
