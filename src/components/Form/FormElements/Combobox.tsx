@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -22,11 +22,13 @@ export default function Combobox({
   onValueChange,
   onBlur,
   list,
+  ref,
 }: {
   value: string;
   onValueChange: (value: string) => void;
   onBlur: () => void;
   list: { value: string; label: string }[];
+  ref: React.Ref<HTMLInputElement>;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -48,7 +50,7 @@ export default function Combobox({
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search framework..." ref={ref} />
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>

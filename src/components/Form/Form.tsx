@@ -154,6 +154,7 @@ export default function Form({
                       <Input
                         value={field.value}
                         onChange={field.onChange}
+                        ref={field.ref}
                         onBlur={field.onBlur}
                       />
                       {error && <FieldError>{error.message}</FieldError>}
@@ -172,10 +173,9 @@ export default function Form({
                     <>
                       <Input
                         type="number"
-                        min={0}
-                        max={20}
                         value={field.value}
                         onChange={(e) => field.onChange(+e.target.value)}
+                        ref={field.ref}
                         onBlur={field.onBlur}
                       />
                       {error && <FieldError>{error.message}</FieldError>}
@@ -197,6 +197,7 @@ export default function Form({
                       <Combobox
                         value={field.value}
                         onValueChange={field.onChange}
+                        ref={field.ref}
                         onBlur={field.onBlur}
                         list={errorCorrectionLevels}
                       />
@@ -218,6 +219,7 @@ export default function Form({
                         value={field.value}
                         onValueChange={field.onChange}
                         onBlur={field.onBlur}
+                        ref={field.ref}
                         list={imageFormats}
                       />
                       {error && <FieldError>{error.message}</FieldError>}
