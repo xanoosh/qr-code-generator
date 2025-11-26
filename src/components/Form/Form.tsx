@@ -20,7 +20,7 @@ export default function Form({
 }: {
   generateQR: (text: string, options?: QRCodeOptionsInterface) => void;
 }) {
-  const { control, handleSubmit } = useForm<FormDataType>({
+  const { control, reset, handleSubmit } = useForm<FormDataType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       'qr-code-value': '',
@@ -33,6 +33,7 @@ export default function Form({
   return (
     <div className="w-full max-w-md">
       <form
+        id="qr-generator-form"
         onSubmit={handleSubmit((data) => {
           generateQR(data['qr-code-value'], {
             errorCorrectionLevel: data['error-correction'],
@@ -75,8 +76,13 @@ export default function Form({
             </FieldGroup>
           </FieldSet>
           <FieldSeparator />
-          <Field orientation="horizontal">
-            <Button type="submit">Submit</Button>
+          <Field orientation="horizontal" className="justify-between">
+            <Button type="button" variant="outline" onClick={() => reset()}>
+              Reset to default
+            </Button>
+            <Button type="submit" form="qr-generator-form">
+              Generate QR
+            </Button>
           </Field>
         </FieldGroup>
       </form>

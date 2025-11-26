@@ -23,22 +23,33 @@ export default function FormElement({
       <Controller
         name={name}
         control={control}
-        render={({ field, fieldState: { error } }) => (
+        render={({ field, fieldState }) => (
           <>
-            {variant === 'text' ? <Input type="text" {...field} /> : null}
+            {variant === 'text' ? (
+              <Input
+                type="text"
+                id={name}
+                aria-invalid={fieldState.invalid}
+                {...field}
+              />
+            ) : null}
             {variant === 'number' ? (
               <Input
                 type="number"
+                id={name}
+                aria-invalid={fieldState.invalid}
                 {...field}
                 onChange={(e) => field.onChange(+e.target.value)}
               />
             ) : null}
             {variant === 'select' && options ? (
               <Select
+                aria-invalid={fieldState.invalid}
                 onValueChange={(value) => field.onChange(value)} // or convert value as needed
                 value={String(field.value)}
               >
                 <SelectTrigger
+                  id={name}
                   ref={field.ref}
                   onBlur={field.onBlur}
                   className="w-[180px]"
@@ -54,10 +65,9 @@ export default function FormElement({
                 </SelectContent>
               </Select>
             ) : null}
-            {/* {variant === 'select' && options ? (
-              <SelectComponent options={options} {...field} />
-            ) : null} */}
-            {error && <FieldError>{error.message}</FieldError>}
+            {fieldState.error && (
+              <FieldError>{fieldState.error.message}</FieldError>
+            )}
           </>
         )}
       />
