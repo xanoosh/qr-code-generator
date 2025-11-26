@@ -33,12 +33,7 @@ function App() {
   return (
     <main className="h-screen flex flex-col gap-4 justify-center items-center bg-slate-900">
       <QrForm generateQR={generateQR} />
-      <QrDialog
-        open={dialogOpen}
-        setOpen={setDalogOpen}
-        qrPath={qrPath}
-        setQrPath={setQrPath}
-      />
+      <QrDialog open={dialogOpen} setOpen={setDalogOpen} qrPath={qrPath} />
     </main>
   );
 }

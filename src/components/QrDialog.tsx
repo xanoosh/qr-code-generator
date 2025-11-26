@@ -13,12 +13,10 @@ export default function QrDialog({
   open,
   setOpen,
   qrPath,
-  setQrPath,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
   qrPath: string;
-  setQrPath: (qrPath: string) => void;
 }) {
   //download qr
   function downloadQR(dataUrl: string, filename?: string) {
@@ -53,10 +51,7 @@ export default function QrDialog({
               <Button
                 className="cursor-pointer"
                 variant="outline"
-                onClick={() => {
-                  setOpen(false);
-                  setQrPath('');
-                }}
+                onClick={() => setOpen(false)}
               >
                 Cancel
               </Button>
