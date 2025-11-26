@@ -1,7 +1,11 @@
-import type { Control, FieldValues } from 'react-hook-form';
+import type { Control } from 'react-hook-form';
+import { formSchema } from './components/Form/FormSchema';
+import { z } from 'zod';
+
+export type FormDataType = z.infer<typeof formSchema>;
 
 export interface FormElementInterface {
-  control: Control<FieldValues>;
+  control: Control<FormDataType>;
   variant: 'text' | 'number' | 'select';
   name: string;
   label: string;

@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 //components
 import {
@@ -11,19 +10,18 @@ import {
 import { Button } from '@/components/ui/button';
 import FormElement from './FormElement/FormElement';
 //form data
-import { schema } from './FormSchema';
+import { formSchema } from './FormSchema';
 import { errorCorrectionLevels, imageFormats } from './FormData';
 //types
-import type { QRCodeOptionsInterface } from '@/interfaces';
-type FormData = z.infer<typeof schema>;
+import type { FormDataType, QRCodeOptionsInterface } from '@/interfaces';
 
 export default function Form({
   generateQR,
 }: {
   generateQR: (text: string, options?: QRCodeOptionsInterface) => void;
 }) {
-  const { control, handleSubmit } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  const { control, handleSubmit } = useForm<FormDataType>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       'qr-code-value': '',
       'qr-code-margin': 1,

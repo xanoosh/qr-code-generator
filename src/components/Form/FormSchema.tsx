@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-//declare schema unions
-
+// declare schema unions
 const schemaUnionLow = z.object({
   'qr-code-value': z
     .string()
@@ -54,8 +53,8 @@ const schemaUnionHigh = z.object({
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp']),
 });
 
-//declare final schema
-export const schema = z.discriminatedUnion('error-correction', [
+// final schema with discriminatedUnion
+export const formSchema = z.discriminatedUnion('error-correction', [
   schemaUnionLow,
   schemaUnionMedium,
   schemaUnionQuartile,
