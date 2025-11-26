@@ -7,11 +7,7 @@ import {
 } from '@/components/ui/card';
 import Form from './Form/Form';
 
-export default function QrForm({
-  generateQR,
-}: {
-  generateQR: (text: string) => void;
-}) {
+export default function QrForm() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -21,7 +17,7 @@ export default function QrForm({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form generateQR={generateQR} />
+        <Form />
       </CardContent>
     </Card>
   );

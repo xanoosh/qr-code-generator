@@ -1,3 +1,6 @@
+import { useQrStore } from '@/store/store';
+import { downloadQR } from '@/globals/utils';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,26 +12,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-export default function QrDialog({
-  open,
-  setOpen,
-  qrPath,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  qrPath: string;
-}) {
-  //download qr
-  function downloadQR(dataUrl: string, filename?: string) {
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = filename || 'qrcode.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+export default function QrDialog() {
+  const { qrPath, setDialogOpen, dialogOpen } = useQrStore();
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <form>
         <DialogContent className="sm:max-w-[425px] bg-slate-100">
           <DialogHeader>
@@ -51,7 +39,7 @@ export default function QrDialog({
               <Button
                 className="cursor-pointer"
                 variant="outline"
-                onClick={() => setOpen(false)}
+                onClick={() => setDialogOpen(false)}
               >
                 Cancel
               </Button>
@@ -59,7 +47,7 @@ export default function QrDialog({
             <Button
               className="cursor-pointer"
               type="submit"
-              onClick={() => downloadQR(qrPath)}
+              onClick={() => downloadQR()}
             >
               Download Qr Code
             </Button>

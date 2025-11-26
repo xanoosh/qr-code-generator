@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { generateQR } from '@/globals/utils';
 //components
 import {
   Field,
@@ -10,16 +11,12 @@ import {
 import { Button } from '@/components/ui/button';
 import FormElement from './FormElement/FormElement';
 //form data
-import { formSchema } from './FormSchema';
-import { errorCorrectionLevels, imageFormats } from './FormData';
+import { formSchema } from '@/globals/formSchema';
+import { errorCorrectionLevels, imageFormats } from '@/globals/formSelectData';
 //types
-import type { FormDataType, QRCodeOptionsInterface } from '@/interfaces';
+import type { FormDataType } from '@/interfaces';
 
-export default function Form({
-  generateQR,
-}: {
-  generateQR: (text: string, options?: QRCodeOptionsInterface) => void;
-}) {
+export default function Form() {
   const { control, reset, handleSubmit } = useForm<FormDataType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
