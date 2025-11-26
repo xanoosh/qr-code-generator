@@ -3,11 +3,12 @@ import { formSchema } from './components/Form/FormSchema';
 import { z } from 'zod';
 
 export type FormDataType = z.infer<typeof formSchema>;
+type InputName = keyof FormDataType;
 
 export interface FormElementInterface {
   control: Control<FormDataType>;
   variant: 'text' | 'number' | 'select';
-  name: string;
+  name: InputName;
   label: string;
   options?: { label: string; value: string }[];
 }
