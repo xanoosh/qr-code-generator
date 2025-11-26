@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import type { FormElementInterface } from '@/interfaces';
 
 export default function FormElement({
@@ -26,8 +27,8 @@ export default function FormElement({
         render={({ field, fieldState }) => (
           <>
             {variant === 'text' ? (
-              <Input
-                type="text"
+              <Textarea
+                rows={4}
                 id={name}
                 aria-invalid={fieldState.invalid}
                 {...field}
