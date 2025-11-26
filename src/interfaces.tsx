@@ -1,5 +1,5 @@
 import type { Control } from 'react-hook-form';
-import { formSchema } from './components/Form/FormSchema';
+import { formSchema } from './globals/formSchema';
 import { z } from 'zod';
 
 export type FormDataType = z.infer<typeof formSchema>;
