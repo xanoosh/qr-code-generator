@@ -2,12 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { generateQR } from '@/globals/utils';
 //components
-import {
-  Field,
-  FieldGroup,
-  FieldSeparator,
-  FieldSet,
-} from '@/components/ui/field';
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
 import FormElement from './FormElement/FormElement';
 //form data
@@ -23,7 +18,7 @@ export default function Form() {
       'qr-code-value': '',
       'qr-code-margin': 1,
       'error-correction': 'M',
-      'image-format': 'image/png',
+      'image-format': 'svg',
     },
   });
 
@@ -32,11 +27,9 @@ export default function Form() {
       <form
         id="qr-generator-form"
         onSubmit={handleSubmit((data) => {
-          generateQR(data['qr-code-value'], {
-            errorCorrectionLevel: data['error-correction'],
-            margin: data['qr-code-margin'],
-            type: data['image-format'],
-          });
+          console.log('submit');
+          console.log(data);
+          generateQR(data);
         })}
       >
         <FieldGroup>
@@ -72,7 +65,6 @@ export default function Form() {
               />
             </FieldGroup>
           </FieldSet>
-          <FieldSeparator />
           <Field orientation="horizontal" className="justify-between">
             <Button type="button" variant="outline" onClick={() => reset()}>
               Reset to default

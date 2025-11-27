@@ -7,21 +7,31 @@ type InputName = keyof FormDataType;
 
 export interface FormElementInterface {
   control: Control<FormDataType>;
-  variant: 'text' | 'number' | 'select';
+  variant: 'radio' | 'text' | 'number' | 'select';
   name: InputName;
   label: string;
   options?: { label: string; value: string }[];
 }
 
-export interface QRCodeOptionsInterface {
+// type vectorQr = { type: 'svg' };
+// type rasterQr = { type: 'image/png' | 'image/jpeg' | 'image/webp' };
+
+type QRCodeOptionsInterface = {
   maskPattern?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
   version?: number;
   errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H';
-  type?: 'image/png' | 'image/jpeg' | 'image/webp';
   quality?: number;
   margin?: number;
   color?: {
     dark: string;
     light: string;
   };
+};
+
+export interface QRCodeRasterOptionsInterface extends QRCodeOptionsInterface {
+  type: 'image/png' | 'image/jpeg' | 'image/webp';
+}
+
+export interface QRCodeVectorOptionsInterface extends QRCodeOptionsInterface {
+  type: 'svg';
 }

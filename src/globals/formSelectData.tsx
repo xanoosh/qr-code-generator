@@ -19,15 +19,20 @@ export const errorCorrectionLevels = [
 
 export const imageFormats = [
   {
+    value: 'svg',
+    label: 'svg',
+  },
+  {
     value: 'image/png',
     label: 'png',
+  },
+
+  {
+    value: 'image/webp',
+    label: 'webp',
   },
   {
     value: 'image/jpeg',
     label: 'jpeg',
-  },
-  {
-    value: 'image/webp',
-    label: 'webp',
   },
 ];
