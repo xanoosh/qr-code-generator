@@ -13,9 +13,6 @@ export interface FormElementInterface {
   options?: { label: string; value: string }[];
 }
 
-// type vectorQr = { type: 'svg' };
-// type rasterQr = { type: 'image/png' | 'image/jpeg' | 'image/webp' };
-
 type QRCodeOptionsInterface = {
   maskPattern?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
   version?: number;

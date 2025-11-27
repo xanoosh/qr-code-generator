@@ -26,11 +26,7 @@ export default function Form() {
     <div className="w-full max-w-md">
       <form
         id="qr-generator-form"
-        onSubmit={handleSubmit((data) => {
-          console.log('submit');
-          console.log(data);
-          generateQR(data);
-        })}
+        onSubmit={handleSubmit((data) => generateQR(data))}
       >
         <FieldGroup>
           <FieldSet>
