@@ -1,4 +1,4 @@
-import { useQrStore } from '@/store/store';
+import { useQrStore } from '@/store/appStore';
 import { downloadQR } from '@/globals/utils';
 
 import { Button } from '@/components/ui/button';
@@ -18,12 +18,10 @@ export default function QrDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <form>
-        <DialogContent className="sm:max-w-[425px] bg-slate-100">
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Your QR Code</DialogTitle>
-            <DialogDescription>
-              Click on the button below to download your QR code.
-            </DialogDescription>
+            <DialogTitle>Your QR code is ready!</DialogTitle>
+            <DialogDescription>Click the button to download.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             {qrPath?.length > 0 ? (

@@ -4,7 +4,7 @@ import type {
   QRCodeRasterOptionsInterface,
 } from '@/interfaces';
 import QRCode from 'qrcode';
-import { useQrStore } from '@/store/store';
+import { useQrStore } from '@/store/appStore';
 
 // Generate qr fn
 export const generateQR = async (data: FormDataType) => {
