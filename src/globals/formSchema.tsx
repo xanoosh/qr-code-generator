@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 // Safe assumptions - code string length
 // Level L (7% correction): 200 characters
 // Level M (15% correction): 150 characters
@@ -15,7 +14,7 @@ const schemaUnionLow = z.object({
   'error-correction': z.literal(['L']),
   'qr-code-margin': z
     .number()
-    .min(1, { message: 'Margin value is too low' })
+    .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
 });
@@ -28,7 +27,7 @@ const schemaUnionMedium = z.object({
   'error-correction': z.literal(['M']),
   'qr-code-margin': z
     .number()
-    .min(1, { message: 'Margin value is too low' })
+    .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
 });
@@ -41,7 +40,7 @@ const schemaUnionQuartile = z.object({
   'error-correction': z.literal(['Q']),
   'qr-code-margin': z
     .number()
-    .min(1, { message: 'Margin value is too low' })
+    .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
 });
@@ -54,7 +53,7 @@ const schemaUnionHigh = z.object({
   'error-correction': z.literal(['H']),
   'qr-code-margin': z
     .number()
-    .min(1, { message: 'Margin value is too low' })
+    .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
 });
