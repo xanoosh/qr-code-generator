@@ -18,21 +18,19 @@ export default function QrDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <form>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] gap-8">
           <DialogHeader>
             <DialogTitle>Your QR code is ready!</DialogTitle>
             <DialogDescription>Click the button to download.</DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
-            {qrPath?.length > 0 ? (
-              <img
-                src={qrPath}
-                alt="qr code"
-                className="rounded-lg mx-auto w-40 h-40"
-              />
-            ) : null}
-          </div>
-          <DialogFooter className="flex-col gap-2 sm:justify-between">
+          {qrPath?.length > 0 ? (
+            <img
+              src={qrPath}
+              alt="qr code"
+              className="rounded-lg mx-auto w-40 h-40"
+            />
+          ) : null}
+          <DialogFooter className="flex-row w-full gap-4 sm:justify-between justify-between">
             <DialogClose asChild>
               <Button
                 className="cursor-pointer"

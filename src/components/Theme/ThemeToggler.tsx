@@ -6,7 +6,7 @@ export default function ThemeToggler() {
   const { theme, setTheme } = useThemeStore();
 
   return (
-    <div className="flex items-center justify-end space-x-2 sm:w-full w-sm">
+    <div className="flex items-center justify-end space-x-2 w-full">
       <Switch
         id="dark-mode"
         checked={theme === 'dark'}
