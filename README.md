@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# QR Code Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, fast, and user-friendly QR code generator built with React and deployed on Vercel.
 
-Currently, two official plugins are available:
+Project Link: [https://qr-code-generator-alpha-eight.vercel.app/](https://qr-code-generator-alpha-eight.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Usage
 
-## React Compiler
+1. Enter any text or URL in the input field
+2. Set the QR code margin (1 by default)
+3. Adjust the QR code error correction using the select (Medium by default)
+4. Choose the desired QR Code format using the select (svg by default)
+5. Click "Generate QR Code" to create your QR code
+6. Download the QR code
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn UI
+- **State Management**: Zustand
+- **Form Handling**: React Hook Form
+- **Validation**: Zod
+- **Icons**: Lucide React
+- **Deployment**: Vercel
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 🎨 Modern and intuitive UI built with Shadcn UI
+- ⚡ Lightning-fast performance with Vite
+- 📱 Fully responsive design
+- 🎯 Type-safe with TypeScript
+- 🔄 Real-time QR code generation
+- 💾 Download QR codes as images
+  <!-- - 📋 Copy input text to clipboard -->
+  <!-- - 🎚️ Adjustable QR code size (128px - 512px) -->
+- ✅ Form validation with Zod and React Hook Form
+- 🔐 State management with Zustand
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+
+```bash
+git clone https://github.com/xanoosh/qr-code-generator.git
+cd qr-code-generator
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
 ```
+
+3. Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## Support
+
+If you found this project helpful, please give it a ⭐️!
