@@ -57,9 +57,14 @@ export default function FormElement({
                 <SelectValue placeholder="Select option" />
               </SelectTrigger>
               <SelectContent>
-                {options?.map(({ label, value }, i) => (
-                  <SelectItem key={i} value={value}>
-                    {label}
+                {options?.map((el, i) => (
+                  <SelectItem key={i} value={el.value}>
+                    <span>{el.label}</span>
+                    {el.description ? (
+                      <span className="opacity-60 text-xs">
+                        {el.description}
+                      </span>
+                    ) : null}
                   </SelectItem>
                 ))}
               </SelectContent>

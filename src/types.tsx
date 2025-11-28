@@ -28,7 +28,7 @@ export interface FormElementInterface {
   variant: 'radio' | 'text' | 'number' | 'select';
   name: InputName;
   label: string;
-  options?: { label: string; value: string }[];
+  options?: { label: string; value: string; description?: string }[];
 }
 
 // QR generator option types
