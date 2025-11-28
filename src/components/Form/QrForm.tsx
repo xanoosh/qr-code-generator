@@ -11,7 +11,7 @@ import { errorCorrectionLevels, imageFormats } from '@/globals/formSelectData';
 //form type
 import type { FormDataType } from '@/types';
 
-export default function Form() {
+export default function QrForm() {
   const { control, reset, handleSubmit } = useForm<FormDataType>({
     resolver: zodResolver(formSchema),
     defaultValues: {

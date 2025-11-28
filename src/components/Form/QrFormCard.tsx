@@ -5,9 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Form from '@/components/Form/Form';
+import QrForm from '@/components/Form/QrForm';
 
-export default function QrForm() {
+export default function QrFormCard() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -17,7 +17,7 @@ export default function QrForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form />
+        <QrForm />
       </CardContent>
     </Card>
   );
