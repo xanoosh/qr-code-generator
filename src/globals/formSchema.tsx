@@ -1,9 +1,4 @@
 import { z } from 'zod';
-// Safe assumptions - code string length
-// Level L (7% correction): 200 characters
-// Level M (15% correction): 150 characters
-// Level Q (25% correction): 100 characters
-// Level H (30% correction): 80 characters
 
 // declare schema unions
 const schemaUnionLow = z.object({

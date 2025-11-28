@@ -1,17 +1,17 @@
+import { useQrStore } from '@/store/useQrStore';
 import type {
   FormDataType,
   QRCodeVectorOptionsInterface,
   QRCodeRasterOptionsInterface,
-} from '@/interfaces';
+} from '@/types';
 import QRCode from 'qrcode';
-import { useQrStore } from '@/store/appStore';
 
-// Generate qr fn
+// Generate QR
 export const generateQR = async (data: FormDataType) => {
   const qrValue = data['qr-code-value'];
   const setQrPath = useQrStore.getState().setQrPath;
   const setDialogOpen = useQrStore.getState().setDialogOpen;
-  // generate vector img
+  // generate vector link
   if (data['image-format'] === 'svg') {
     const options: QRCodeVectorOptionsInterface = {
       errorCorrectionLevel: data['error-correction'],
@@ -29,7 +29,7 @@ export const generateQR = async (data: FormDataType) => {
       console.error(err);
     }
   }
-  //generate raster img
+  // generate raster link
   else {
     const options: QRCodeRasterOptionsInterface = {
       errorCorrectionLevel: data['error-correction'],
@@ -46,7 +46,7 @@ export const generateQR = async (data: FormDataType) => {
   }
 };
 
-// Download qr fn
+// Download QR
 export const downloadQR = (filename?: string) => {
   const dataUrl = useQrStore.getState().qrPath;
   const link = document.createElement('a');

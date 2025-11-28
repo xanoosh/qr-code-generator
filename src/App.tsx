@@ -1,7 +1,7 @@
 import QrForm from '@/components/QrForm';
 import QrDialog from '@/components/QrDialog';
 import { ThemeProvider } from '@/components/Theme/ThemeProvider';
-import ThemeToggler from './components/Theme/ThemeToggler';
+import ThemeToggler from '@/components/Theme/ThemeToggler';
 
 function App() {
   return (

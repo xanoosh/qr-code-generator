@@ -4,12 +4,12 @@ import { generateQR } from '@/globals/utils';
 //components
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
-import FormElement from './FormElement/FormElement';
+import FormElement from '@/components/Form/FormElement/FormElement';
 //form data
 import { formSchema } from '@/globals/formSchema';
 import { errorCorrectionLevels, imageFormats } from '@/globals/formSelectData';
-//types
-import type { FormDataType } from '@/interfaces';
+//form type
+import type { FormDataType } from '@/types';
 
 export default function Form() {
   const { control, reset, handleSubmit } = useForm<FormDataType>({

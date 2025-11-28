@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Form from './Form/Form';
+import Form from '@/components/Form/Form';
 
 export default function QrForm() {
   return (

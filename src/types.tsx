@@ -2,9 +2,27 @@ import type { Control } from 'react-hook-form';
 import { formSchema } from './globals/formSchema';
 import { z } from 'zod';
 
-export type FormDataType = z.infer<typeof formSchema>;
-type InputName = keyof FormDataType;
+//Store types
 
+type Theme = 'light' | 'dark' | 'system';
+export type ThemeStoreType = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+};
+
+export type qrStoreType = {
+  dialogOpen: boolean;
+  setDialogOpen: (value: boolean) => void;
+  qrPath: string;
+  setQrPath: (value: string) => void;
+};
+
+//component types
+
+// form types
+export type FormDataType = z.infer<typeof formSchema>;
+
+type InputName = keyof FormDataType;
 export interface FormElementInterface {
   control: Control<FormDataType>;
   variant: 'radio' | 'text' | 'number' | 'select';
@@ -12,6 +30,8 @@ export interface FormElementInterface {
   label: string;
   options?: { label: string; value: string }[];
 }
+
+// QR generator option types
 
 type QRCodeOptionsInterface = {
   maskPattern?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
@@ -32,3 +52,5 @@ export interface QRCodeRasterOptionsInterface extends QRCodeOptionsInterface {
 export interface QRCodeVectorOptionsInterface extends QRCodeOptionsInterface {
   type: 'svg';
 }
+
+// component types

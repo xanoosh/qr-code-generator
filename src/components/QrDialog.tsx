@@ -1,4 +1,4 @@
-import { useQrStore } from '@/store/appStore';
+import { useQrStore } from '@/store/useQrStore';
 import { downloadQR } from '@/globals/utils';
 
 import { Button } from '@/components/ui/button';

@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import type { FormElementInterface } from '@/interfaces';
+import type { FormElementInterface } from '@/types';
 
 export default function FormElement({
   control,
