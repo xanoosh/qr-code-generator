@@ -1,5 +1,5 @@
 import { useQrStore } from '@/store/useQrStore';
-import { downloadQR } from '@/globals/utils';
+import { downloadQr } from '@/utils/downloadQr';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -43,7 +43,7 @@ export default function QrDialog() {
             <Button
               className="cursor-pointer"
               type="submit"
-              onClick={() => downloadQR()}
+              onClick={() => downloadQr()}
             >
               Download Qr Code
             </Button>

@@ -32,7 +32,6 @@ export interface FormElementInterface {
 }
 
 // QR generator option types
-
 type QRCodeOptionsInterface = {
   maskPattern?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
   version?: number;
