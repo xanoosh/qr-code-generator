@@ -1,10 +1,13 @@
+import QRCode from 'qrcode';
 import { useQrStore } from '@/store/useQrStore';
+import { createRoundedModulePath } from '@/utils/createRoundedModulePath';
+import { calculateModulePosition } from './calculateModulePosition';
+
 import type {
   FormDataType,
   QRCodeVectorOptionsInterface,
   QRCodeRasterOptionsInterface,
 } from '@/types';
-import QRCode from 'qrcode';
 
 export const generateQr = async (data: FormDataType) => {
   const qrValue = data['qr-code-value'];
@@ -46,14 +49,10 @@ export const generateQr = async (data: FormDataType) => {
   }
 };
 
-// new type (all img options included)
-import type { QRCodeOptionsInterfaceNew } from '@/types';
-import { createRoundedModulePath } from '@/utils/createRoundedModulePath';
-
 // proper rounded qr
 const createRoundedQR = (
   qrValue: string,
-  options: QRCodeOptionsInterfaceNew
+  options: QRCodeVectorOptionsInterface
 ) => {
   const dark = 'black';
   const light = 'white';
@@ -69,38 +68,33 @@ const createRoundedQR = (
   for (let y = 0; y < count; y++) {
     for (let x = 0; x < count; x++) {
       if (!isDark(x, y)) continue;
-
-      // pełny moduł (bez zaokrągleń) – rysowany W ŚRODKU maskowanej grupy
+      const { xPos, yPos, w, h } = calculateModulePosition(x, y, isDark);
       rects.push(
-        `<rect x="${x}" y="${y}" width="1" height="1" fill="${dark}" />`
+        `<rect
+          x="${xPos}"
+          y="${yPos}"
+          width="${w}"
+          height="${h}"
+          fill="${dark}"
+        />`
       );
-
-      // pathy narożników – DO MASKI (wycinają kształt)
       const cornerPaths = createRoundedModulePath({ x, y, isDark, r });
       for (const d of cornerPaths) {
-        // w masce czarny = wycięty fragment
         maskCuts.push(`<path d="${d}" fill="black" />`);
       }
     }
   }
-
   return `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${count} ${count}">
-  <defs>
-    <mask id="qr-mask" maskUnits="userSpaceOnUse">
-      <!-- tło maski: wszystko widoczne -->
-      <rect x="0" y="0" width="${count}" height="${count}" fill="white" />
-      <!-- wycięcia rogów: czarne path -->
-      ${maskCuts.join('\n')}
-    </mask>
-  </defs>
-
-  <!-- tło całego QR -->
-  <rect x="0" y="0" width="${count}" height="${count}" fill="${light}" />
-
-  <!-- czarne moduły przycięte maską -->
-  <g mask="url(#qr-mask)">
-    ${rects.join('\n')}
-  </g>
-</svg>`;
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${count} ${count}">
+            <defs>
+              <mask id="qr-mask" maskUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="${count}" height="${count}" fill="white" />
+                ${maskCuts.join('\n')}
+              </mask>
+            </defs>
+            <rect x="0" y="0" width="${count}" height="${count}" fill="${light}" />
+            <g mask="url(#qr-mask)">
+              ${rects.join('\n')}
+            </g>
+          </svg>`;
 };

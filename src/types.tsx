@@ -44,10 +44,6 @@ type QRCodeOptionsInterface = {
   };
 };
 
-export type QRCodeOptionsInterfaceNew = QRCodeOptionsInterface & {
-  type: 'svg' | 'image/png' | 'image/jpeg' | 'image/webp';
-};
-
 export interface QRCodeRasterOptionsInterface extends QRCodeOptionsInterface {
   type: 'image/png' | 'image/jpeg' | 'image/webp';
 }
