@@ -2,13 +2,13 @@ type ModulePathArguments = {
   x: number;
   y: number;
   isDark: (x: number, y: number) => number;
-  r?: number;
+  rounded?: number;
 };
 
 export const createRoundedModulePath = (
   args: ModulePathArguments
 ): string[] => {
-  const { x, y, isDark, r = 0.25 } = args;
+  const { x, y, isDark, rounded = 0.25 } = args;
 
   const top = isDark(x, y - 1);
   const bottom = isDark(x, y + 1);
@@ -17,7 +17,7 @@ export const createRoundedModulePath = (
 
   const paths: string[] = [];
 
-  const radius = r;
+  const radius = rounded;
   const expand = 0.02;
 
   if (!top && !right) {

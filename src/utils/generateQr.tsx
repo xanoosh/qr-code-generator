@@ -24,7 +24,9 @@ export const generateQr = async (data: FormDataType) => {
       // const svgString = await QRCode.toString(qrValue, {
       //   ...options,
       // });
-      const svgString = createRoundedQR(qrValue, options);
+      // sizes from 0.1 to 0.58 look good
+      const svgString = createRoundedQR(qrValue, options, 0.58);
+      // const svgString = createRoundedQR(qrValue, options);
       const svgUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgString)}`;
       setQrPath(svgUrl);
       setDialogOpen(true);
@@ -52,7 +54,8 @@ export const generateQr = async (data: FormDataType) => {
 // proper rounded qr
 const createRoundedQR = (
   qrValue: string,
-  options: QRCodeVectorOptionsInterface
+  options: QRCodeVectorOptionsInterface,
+  rounded?: number
 ) => {
   const dark = 'black';
   const light = 'white';
@@ -63,7 +66,6 @@ const createRoundedQR = (
 
   const rects: string[] = [];
   const maskCuts: string[] = [];
-  const r = 0.4;
 
   for (let y = 0; y < count; y++) {
     for (let x = 0; x < count; x++) {
@@ -78,9 +80,11 @@ const createRoundedQR = (
           fill="${dark}"
         />`
       );
-      const cornerPaths = createRoundedModulePath({ x, y, isDark, r });
-      for (const d of cornerPaths) {
-        maskCuts.push(`<path d="${d}" fill="black" />`);
+      if (rounded) {
+        const cornerPaths = createRoundedModulePath({ x, y, isDark, rounded });
+        for (const d of cornerPaths) {
+          maskCuts.push(`<path d="${d}" fill="black" />`);
+        }
       }
     }
   }
