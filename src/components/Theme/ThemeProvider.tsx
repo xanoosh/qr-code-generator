@@ -1,6 +1,6 @@
 'use client'; // Dla Vite niepotrzebne, ale kompatybilne
 import { useEffect } from 'react';
-import { useThemeStore } from '@/store/themeStore';
+import { useThemeStore } from '@/store/useThemeStore';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = useThemeStore((state) => state.theme);

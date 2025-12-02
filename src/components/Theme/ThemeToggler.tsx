@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { useThemeStore } from '@/store/themeStore';
+import { useThemeStore } from '@/store/useThemeStore';
 
 export default function ThemeToggler() {
   const { theme, setTheme } = useThemeStore();
