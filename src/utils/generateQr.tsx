@@ -48,81 +48,59 @@ export const generateQr = async (data: FormDataType) => {
 
 // new type (all img options included)
 import type { QRCodeOptionsInterfaceNew } from '@/types';
-import { createRoundedModulePath } from './createRoundedModulePath';
-
-// export const generateQrNew = async (data: FormDataType) => {
-//   //qr state methods
-//   const setQrPath = useQrStore.getState().setQrPath;
-//   const setDialogOpen = useQrStore.getState().setDialogOpen;
-//   //parse qr data
-//   const qrValue = data['qr-code-value'];
-//   const options: QRCodeOptionsInterfaceNew = {
-//     errorCorrectionLevel: data['error-correction'],
-//     type: data['image-format'],
-//     margin: data['qr-code-margin'],
-//   };
-// };
-
-// qr with dots
-// const createDottedQR = (
-//   qrValue: string,
-//   options: QRCodeOptionsInterfaceNew
-// ) => {
-//   const radius = 0.4; // placeholder
-//   const dark = 'black'; // placeholder
-//   const light = 'white'; // placeholder
-//   // create modules
-//   const qrObject = QRCode.create(qrValue, options);
-//   const count = qrObject.modules.size;
-//   const isDark = (x: number, y: number) => qrObject.modules.get(x, y);
-//   const circles = [];
-//   for (let y = 0; y < count; y++) {
-//     for (let x = 0; x < count; x++) {
-//       if (!isDark(x, y)) continue;
-
-//       circles.push(
-//         `<circle cx="${x + 0.5}" cy="${y + 0.5}" r="${radius}" fill="${dark}"/>`
-//       );
-//     }
-//   }
-//   return `
-//   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${count} ${count}">
-//     <rect x="0" y="0" width="${count}" height="${count}" fill="${light}"/>
-//     ${circles.join('\n  ')}
-//   </svg>`;
-// };
+import { createRoundedModulePath } from '@/utils/createRoundedModulePath';
 
 // proper rounded qr
 const createRoundedQR = (
   qrValue: string,
   options: QRCodeOptionsInterfaceNew
 ) => {
-  const dark = 'black'; // placeholder
-  const light = 'white'; // placeholder
-  // create modules
+  const dark = 'black';
+  const light = 'white';
+
   const qrObject = QRCode.create(qrValue, options);
   const count = qrObject.modules.size;
   const isDark = (x: number, y: number) => qrObject.modules.get(x, y);
-  const rects = [];
-  const r = 0.5;
+
+  const rects: string[] = [];
+  const maskCuts: string[] = [];
+  const r = 0.4;
+
   for (let y = 0; y < count; y++) {
     for (let x = 0; x < count; x++) {
       if (!isDark(x, y)) continue;
-      if (isDark(x, y)) {
-        rects.push(
-          `<rect x="${x}" y="${y}" width="1" height="1" fill="${dark}" />`
-        );
 
-        const cornerPaths = createRoundedModulePath({ x, y, isDark, r });
-        for (const d of cornerPaths) {
-          rects.push(`<path d="${d}" fill="${light}" />`);
-        }
+      // pełny moduł (bez zaokrągleń) – rysowany W ŚRODKU maskowanej grupy
+      rects.push(
+        `<rect x="${x}" y="${y}" width="1" height="1" fill="${dark}" />`
+      );
+
+      // pathy narożników – DO MASKI (wycinają kształt)
+      const cornerPaths = createRoundedModulePath({ x, y, isDark, r });
+      for (const d of cornerPaths) {
+        // w masce czarny = wycięty fragment
+        maskCuts.push(`<path d="${d}" fill="black" />`);
       }
     }
   }
+
   return `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${count} ${count}">
-    <rect x="0" y="0" width="${count}" height="${count}" fill="${light}"/>
-    ${rects.join('\n  ')}
-  </svg>`;
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${count} ${count}">
+  <defs>
+    <mask id="qr-mask" maskUnits="userSpaceOnUse">
+      <!-- tło maski: wszystko widoczne -->
+      <rect x="0" y="0" width="${count}" height="${count}" fill="white" />
+      <!-- wycięcia rogów: czarne path -->
+      ${maskCuts.join('\n')}
+    </mask>
+  </defs>
+
+  <!-- tło całego QR -->
+  <rect x="0" y="0" width="${count}" height="${count}" fill="${light}" />
+
+  <!-- czarne moduły przycięte maską -->
+  <g mask="url(#qr-mask)">
+    ${rects.join('\n')}
+  </g>
+</svg>`;
 };
