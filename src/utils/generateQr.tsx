@@ -103,34 +103,26 @@ const createRoundedQR = (
   const qrObject = QRCode.create(qrValue, options);
   const count = qrObject.modules.size;
   const isDark = (x: number, y: number) => qrObject.modules.get(x, y);
-  const paths = [];
+  const rects = [];
+  const r = 0.5;
   for (let y = 0; y < count; y++) {
     for (let x = 0; x < count; x++) {
       if (!isDark(x, y)) continue;
-      const topEmpty = !isDark(x, y - 1);
-      const rightEmpty = !isDark(x + 1, y);
-      const bottomEmpty = !isDark(x, y + 1);
-      const leftEmpty = !isDark(x - 1, y);
+      if (isDark(x, y)) {
+        rects.push(
+          `<rect x="${x}" y="${y}" width="1" height="1" fill="${dark}" />`
+        );
 
-      const pathArgs = {
-        x,
-        y,
-        edges: {
-          topEmpty,
-          rightEmpty,
-          bottomEmpty,
-          leftEmpty,
-        },
-      };
-
-      const d = createRoundedModulePath(pathArgs);
-
-      paths.push(`<path d="${d}" fill="${dark}" />`);
+        const cornerPaths = createRoundedModulePath({ x, y, isDark, r });
+        for (const d of cornerPaths) {
+          rects.push(`<path d="${d}" fill="${light}" />`);
+        }
+      }
     }
   }
   return `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${count} ${count}">
     <rect x="0" y="0" width="${count}" height="${count}" fill="${light}"/>
-    ${paths.join('\n  ')}
+    ${rects.join('\n  ')}
   </svg>`;
 };
