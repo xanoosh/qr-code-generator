@@ -25,7 +25,7 @@ export type FormDataType = z.infer<typeof formSchema>;
 type InputName = keyof FormDataType;
 export interface FormElementInterface {
   control: Control<FormDataType>;
-  variant: 'radio' | 'text' | 'number' | 'select';
+  variant: 'slider' | 'text' | 'number' | 'select';
   name: InputName;
   label: string;
   options?: { label: string; value: string; description?: string }[];

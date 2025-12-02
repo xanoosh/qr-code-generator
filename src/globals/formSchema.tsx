@@ -12,6 +12,7 @@ const schemaUnionLow = z.object({
     .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
+  'rounded-corners': z.number().min(0).max(0.5),
 });
 
 const schemaUnionMedium = z.object({
@@ -25,6 +26,7 @@ const schemaUnionMedium = z.object({
     .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
+  'rounded-corners': z.number().min(0).max(0.5),
 });
 
 const schemaUnionQuartile = z.object({
@@ -38,6 +40,7 @@ const schemaUnionQuartile = z.object({
     .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
+  'rounded-corners': z.number().min(0).max(0.5),
 });
 
 const schemaUnionHigh = z.object({
@@ -51,6 +54,7 @@ const schemaUnionHigh = z.object({
     .min(0, { message: 'Margin value cannot be negative' })
     .max(20, { message: 'Margin value is too high' }),
   'image-format': z.enum(['image/png', 'image/jpeg', 'image/webp', 'svg']),
+  'rounded-corners': z.number().min(0).max(0.5),
 });
 
 // final schema with discriminatedUnion

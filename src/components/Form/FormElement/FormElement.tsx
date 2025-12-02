@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import type { FormElementInterface } from '@/types';
+import { Slider } from '@/components/ui/slider';
 
 export default function FormElement({
   control,
@@ -24,7 +25,10 @@ export default function FormElement({
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
-          <FieldLabel htmlFor={name}>{label}</FieldLabel>
+          <FieldLabel htmlFor={name}>
+            {label}
+            {variant === 'slider' ? <span>({field.value})</span> : null}
+          </FieldLabel>
           {variant === 'text' ? (
             <Textarea
               rows={4}
@@ -40,6 +44,18 @@ export default function FormElement({
               aria-invalid={fieldState.invalid}
               {...field}
               onChange={(e) => field.onChange(+e.target.value)}
+            />
+          ) : null}
+          {variant === 'slider' ? (
+            <Slider
+              defaultValue={[typeof field.value === 'string' ? 0 : field.value]}
+              onValueChange={(value) => field.onChange(value[0])}
+              aria-invalid={fieldState.invalid}
+              min={0}
+              max={0.5}
+              step={0.1}
+              onBlur={field.onBlur}
+              ref={field.ref}
             />
           ) : null}
           {variant === 'select' && options ? (

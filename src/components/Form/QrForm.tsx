@@ -12,15 +12,17 @@ import { errorCorrectionLevels, imageFormats } from '@/globals/formSelectData';
 import type { FormDataType } from '@/types';
 
 export default function QrForm() {
-  const { control, reset, handleSubmit } = useForm<FormDataType>({
+  const { control, reset, handleSubmit, watch } = useForm<FormDataType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       'qr-code-value': '',
       'qr-code-margin': 1,
       'error-correction': 'M',
       'image-format': 'svg',
+      'rounded-corners': 0,
     },
   });
+  const imageFormat = watch('image-format');
 
   return (
     <div className="w-full max-w-md">
@@ -59,6 +61,14 @@ export default function QrForm() {
                 label="Select image format"
                 options={imageFormats}
               />
+              {imageFormat === 'svg' ? (
+                <FormElement
+                  control={control}
+                  variant="slider"
+                  name="rounded-corners"
+                  label="Set corner radius"
+                />
+              ) : null}
             </FieldGroup>
           </FieldSet>
           <Field orientation="horizontal" className="justify-between">
