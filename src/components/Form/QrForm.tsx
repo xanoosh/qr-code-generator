@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { generateQR } from '@/globals/utils';
+import { generateQr } from '@/utils/generateQr';
 //components
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ export default function QrForm() {
     <div className="w-full max-w-md">
       <form
         id="qr-generator-form"
-        onSubmit={handleSubmit((data) => generateQR(data))}
+        onSubmit={handleSubmit((data) => generateQr(data))}
       >
         <FieldGroup>
           <FieldSet>

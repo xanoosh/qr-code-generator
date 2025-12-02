@@ -6,8 +6,7 @@ import type {
 } from '@/types';
 import QRCode from 'qrcode';
 
-// Generate QR
-export const generateQR = async (data: FormDataType) => {
+export const generateQr = async (data: FormDataType) => {
   const qrValue = data['qr-code-value'];
   const setQrPath = useQrStore.getState().setQrPath;
   const setDialogOpen = useQrStore.getState().setDialogOpen;
@@ -44,15 +43,4 @@ export const generateQR = async (data: FormDataType) => {
       console.error(err);
     }
   }
-};
-
-// Download QR
-export const downloadQR = (filename?: string) => {
-  const dataUrl = useQrStore.getState().qrPath;
-  const link = document.createElement('a');
-  link.href = dataUrl;
-  link.download = filename || 'qrcode';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 };
