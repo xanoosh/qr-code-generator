@@ -53,3 +53,8 @@ export interface QRCodeVectorOptionsInterface extends QRCodeOptionsInterface {
 }
 
 // component types
+export type QrFormCardWrapperProps = {
+  title?: string;
+  description?: string;
+  children?: React.ReactNode;
+};

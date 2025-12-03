@@ -22,12 +22,7 @@ export const generateQr = async (data: FormDataType) => {
     };
     const rounded = data['rounded-corners'];
     try {
-      // const svgString = await QRCode.toString(qrValue, {
-      //   ...options,
-      // });
-      // sizes from 0.1 to 0.58 look good
       const svgString = createRoundedQR(qrValue, options, rounded);
-      // const svgString = createRoundedQR(qrValue, options);
       const svgUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgString)}`;
       setQrPath(svgUrl);
       setDialogOpen(true);
@@ -52,7 +47,6 @@ export const generateQr = async (data: FormDataType) => {
   }
 };
 
-// proper rounded qr
 const createRoundedQR = (
   qrValue: string,
   options: QRCodeVectorOptionsInterface,
