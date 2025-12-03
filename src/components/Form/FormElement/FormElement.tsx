@@ -48,6 +48,7 @@ export default function FormElement({
           ) : null}
           {variant === 'slider' ? (
             <Slider
+              id={name}
               defaultValue={[typeof field.value === 'string' ? 0 : field.value]}
               onValueChange={(value) => field.onChange(value[0])}
               aria-invalid={fieldState.invalid}

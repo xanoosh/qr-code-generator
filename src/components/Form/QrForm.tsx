@@ -5,12 +5,12 @@ import { generateQr } from '@/utils/generateQr';
 import { Field } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
 import FormElement from '@/components/Form/FormElement/FormElement';
+import QrFormCardWrapper from './FormCardWrapper/QrFormCardWrapper';
 //form data
 import { formSchema } from '@/globals/formSchema';
 import { errorCorrectionLevels, imageFormats } from '@/globals/formSelectData';
 //form type
 import type { FormDataType } from '@/types';
-import QrFormCardWrapper from './FormCardWrapper/QrFormCardWrapper';
 
 export default function QrForm() {
   const { control, reset, handleSubmit, watch } = useForm<FormDataType>({
