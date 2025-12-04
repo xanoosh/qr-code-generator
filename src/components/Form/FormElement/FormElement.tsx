@@ -25,10 +25,15 @@ export default function FormElement({
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
-          <FieldLabel htmlFor={name}>
-            {label}
-            {variant === 'slider' ? <span>({field.value})</span> : null}
-          </FieldLabel>
+          {variant !== 'slider' ? (
+            <FieldLabel htmlFor={name}>{label}</FieldLabel>
+          ) : (
+            <FieldLabel>
+              {label}
+              <span>({field.value})</span>
+            </FieldLabel>
+          )}
+
           {variant === 'text' ? (
             <Textarea
               rows={4}
@@ -49,6 +54,7 @@ export default function FormElement({
           {variant === 'slider' ? (
             <Slider
               id={name}
+              aria-labelledby={name}
               defaultValue={[typeof field.value === 'string' ? 0 : field.value]}
               onValueChange={(value) => field.onChange(value[0])}
               aria-invalid={fieldState.invalid}
